@@ -1,4 +1,66 @@
-program PROBLEMA_3;
+program PROBLEMA_2;
 {$codepage utf8}
+var
+  num,mayor,menor:integer;
+  condicion,condMy,condm:boolean;
+//---------------------------------------------------
+function repetidos(num:integer):boolean;
+  var
+    dig:integer; 
+    hay:boolean;
+    
+  function pertenece(dig,num:integer):boolean;
+  var
+    cant,ultimo:integer;
+    condicion:boolean;
+  begin
+  cant:=0;
+  while(num<>0)do
+    begin
+    ultimo:=num MOD 10;
+    num:=num div 10;
+    if(ultimo=dig)then
+        cant:=cant+1;
+    end;
+  if (cant>=1)then
+    condicion:=true
+  else
+    condicion:=false;
+  pertenece:=condicion;
+  end;
+  //---------------------------------------------------
+  begin
+  hay:=false;
+  while(num<>0)and not(hay)do
+    begin
+    dig:=num MOD 10;//ultimo numero del num ingresado, que es la iteracipion del programa global 
+    num:=num DIV 10;//descompongo el iterador para controlar
+    hay:=pertenece(dig,num);//funcion para retornar si el digito se encuentra en el num
+    end;
+  repetidos:=hay;
+  end;
+//---------------------------------------------------
 begin
+  write('Ingresá un número entero: ');
+  readln(num);
+  condicion:=repetidos(num);
+  if not(condicion)then
+    begin
+    writeln('El número no tiene digitos repetidos');
+    mayor:=num;
+    menor:=num;
+    repeat
+        mayor:=mayor+1;
+        menor:=menor-1;
+        condMy:=repetidos(mayor);    
+        condm:=repetidos(menor);
+    until (condMy)or(condm);
+    if(condMy)then
+        write('El mas sercano es: ',mayor);
+    if(condm)then
+        write('El mas sercano es: ',menor);
+    end
+  else
+    write('El número tiene digitos repetidos');
+readln;  
 end.
